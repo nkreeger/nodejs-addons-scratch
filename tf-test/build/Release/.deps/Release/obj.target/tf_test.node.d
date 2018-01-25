@@ -1,0 +1,1 @@
+cmd_Release/obj.target/tf_test.node := g++ -shared -pthread -rdynamic -m64  -Wl,-soname=tf_test.node -o Release/obj.target/tf_test.node -Wl,--start-group Release/obj.target/tf_test/tf_test.o -Wl,--end-group /usr/local/lib/libtensorflow.so /usr/local/lib/libtensorflow_framework.so

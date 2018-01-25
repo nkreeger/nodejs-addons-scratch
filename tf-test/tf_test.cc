@@ -22,6 +22,12 @@ void ArrayTest(const v8::FunctionCallbackInfo<v8::Value> & args) {
 
   v8::Handle<v8::Value> v = args[0];
   if (v->IsFloat32Array()) {
+
+    // TODO(kreeger): Left off right here.
+    // Simply try and convert float32 to a simple tensor and add.
+    // TF_Status* s = TF_NewStatus();
+    // TF_Graph* graph = TF_NewGraph();
+
     double value = 0.0;
     v8::Handle<v8::Float32Array> array = v8::Handle<v8::Float32Array>::Cast(v);
     for (size_t i = 0; i < array->Length(); i++) {

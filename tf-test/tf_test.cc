@@ -1,11 +1,3 @@
-/**
- * Simply returns tensorflow library version through Node.js
- */
-//int main() {
-//  printf("Hello.... C library version is %s\n", TF_Version());
-//  return 0;
-//}
-
 #include <node.h>
 #include <tensorflow/c/c_api.h>
 

@@ -35,10 +35,10 @@ CFLAGS_CC_Debug := \
 	-std=gnu++0x
 
 INCS_Debug := \
-	-I/home/kreeger/.node-gyp/8.9.1/include/node \
-	-I/home/kreeger/.node-gyp/8.9.1/src \
-	-I/home/kreeger/.node-gyp/8.9.1/deps/uv/include \
-	-I/home/kreeger/.node-gyp/8.9.1/deps/v8/include \
+	-I/usr/local/google/home/kreeger/.node-gyp/8.9.1/include/node \
+	-I/usr/local/google/home/kreeger/.node-gyp/8.9.1/src \
+	-I/usr/local/google/home/kreeger/.node-gyp/8.9.1/deps/uv/include \
+	-I/usr/local/google/home/kreeger/.node-gyp/8.9.1/deps/v8/include \
 	-I/usr/local/include
 
 DEFS_Release := \
@@ -71,10 +71,10 @@ CFLAGS_CC_Release := \
 	-std=gnu++0x
 
 INCS_Release := \
-	-I/home/kreeger/.node-gyp/8.9.1/include/node \
-	-I/home/kreeger/.node-gyp/8.9.1/src \
-	-I/home/kreeger/.node-gyp/8.9.1/deps/uv/include \
-	-I/home/kreeger/.node-gyp/8.9.1/deps/v8/include \
+	-I/usr/local/google/home/kreeger/.node-gyp/8.9.1/include/node \
+	-I/usr/local/google/home/kreeger/.node-gyp/8.9.1/src \
+	-I/usr/local/google/home/kreeger/.node-gyp/8.9.1/deps/uv/include \
+	-I/usr/local/google/home/kreeger/.node-gyp/8.9.1/deps/v8/include \
 	-I/usr/local/include
 
 OBJS := \

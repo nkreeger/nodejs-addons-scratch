@@ -16,6 +16,8 @@ void Deallocator(void* data, size_t, void* arg) {
 TF_Tensor* New_TFv8Tensor(v8::Handle<v8::Float32Array> array) {
   void* data = array->Buffer()->GetContents().Data();
 
+  printf("-- array first element: %d\n", static_cast<float*>(data)[0]);
+
   // Copy the v8 array to the TF array
   int64_t dims[] = {1, array->Length()};
   const int numBytes = (dims[0] + dims[1]) * sizeof(float);
@@ -39,7 +41,7 @@ void ArrayTest(const v8::FunctionCallbackInfo<v8::Value> & args) {
     TF_Tensor* right = New_TFv8Tensor(v8::Handle<v8::Float32Array>::Cast(v2));
 
     float* l_tf_data = static_cast<float*>(TF_TensorData(left));
-    printf("test: %d\n", (*l_tf_data));
+    printf("test: %d\n", l_tf_data[0]);
 
     // Next, add an add operation to the graph
     TF_OperationDescription* desc = TF_NewOperation(session->GetGraph(), "AddN", "test");

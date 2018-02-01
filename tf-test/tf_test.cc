@@ -38,6 +38,9 @@ void ArrayTest(const v8::FunctionCallbackInfo<v8::Value> & args) {
     TF_Tensor* left = New_TFv8Tensor(v8::Handle<v8::Float32Array>::Cast(v1));
     TF_Tensor* right = New_TFv8Tensor(v8::Handle<v8::Float32Array>::Cast(v2));
 
+    float* l_tf_data = static_cast<float*>(TF_TensorData(left));
+    printf("test: %d\n", (*l_tf_data));
+
     // Next, add an add operation to the graph
     TF_OperationDescription* desc = TF_NewOperation(session->GetGraph(), "AddN", "test");
 

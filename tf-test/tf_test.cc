@@ -1,3 +1,4 @@
+#include <cstring>
 #include <node.h>
 #include <tensorflow/c/c_api.h>
 #include "tf_session.h"
@@ -10,20 +11,22 @@ void Version(const v8::FunctionCallbackInfo<v8::Value> & args) {
 }
 
 void Deallocator(void* data, size_t, void* arg) {
-  // TODO(kreeger): Actually do this?
+  // TODO(kreeger): Actually do this - yes?
 }
 
 TF_Tensor* New_TFv8Tensor(v8::Handle<v8::Float32Array> array) {
-  void* data = array->Buffer()->GetContents().Data();
-
-  printf("-- array first element: %d\n", static_cast<float*>(data)[0]);
-
   // Copy the v8 array to the TF array
-  int64_t dims[] = {1, array->Length()};
-  const int numBytes = (dims[0] + dims[1]) * sizeof(float);
+  int64_t shape[] = {array->Length()};
+  const int numBytes = array->Length() * sizeof(float);
   bool deallocator_called = false;
-  return TF_NewTensor(TF_FLOAT, dims, 2, data, array->Length(),
-                      &Deallocator, &deallocator_called);
+
+  auto data = array->Buffer()->GetContents().Data();
+
+  // TODO - eventually move this into a wrapper.
+  TF_Tensor* t = TF_AllocateTensor(TF_FLOAT, shape, 1, numBytes);
+  memcpy(TF_TensorData(t), data, TF_TensorByteSize(t));
+
+  return t;
 }
 
 void ArrayTest(const v8::FunctionCallbackInfo<v8::Value> & args) {
@@ -34,14 +37,18 @@ void ArrayTest(const v8::FunctionCallbackInfo<v8::Value> & args) {
   v8::Isolate *isolate = args.GetIsolate();
 
   v8::Handle<v8::Value> v1 = args[0];
-  v8::Handle<v8::Value> v2 = args[0];
+  v8::Handle<v8::Value> v2 = args[1];
   if (v1->IsFloat32Array() && v2->IsFloat32Array()) {
     // First, point v8 buffers to a new tensor
     TF_Tensor* left = New_TFv8Tensor(v8::Handle<v8::Float32Array>::Cast(v1));
     TF_Tensor* right = New_TFv8Tensor(v8::Handle<v8::Float32Array>::Cast(v2));
 
-    float* l_tf_data = static_cast<float*>(TF_TensorData(left));
-    printf("test: %d\n", l_tf_data[0]);
+    printf("left tensor byte size  : %d\n", TF_TensorByteSize(left));
+    printf("right tensor byte size : %d\n", TF_TensorByteSize(left));
+
+    //
+    // TODO(kreeger): Left off right here.  Need to use TFE to call an op.
+    //
 
     // Next, add an add operation to the graph
     TF_OperationDescription* desc = TF_NewOperation(session->GetGraph(), "AddN", "test");

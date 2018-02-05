@@ -1,6 +1,7 @@
 #include <cstring>
 #include <node.h>
 #include <tensorflow/c/c_api.h>
+#include "eager/c_api.h"
 #include "tf_session.h"
 
 namespace add_func {
@@ -38,13 +39,18 @@ void ArrayTest(const v8::FunctionCallbackInfo<v8::Value> & args) {
 
   v8::Handle<v8::Value> v1 = args[0];
   v8::Handle<v8::Value> v2 = args[1];
-  if (v1->IsFloat32Array() && v2->IsFloat32Array()) {
+  if (v2->IsFloat32Array() && v2->IsFloat32Array()) {
     // First, point v8 buffers to a new tensor
     TF_Tensor* left = New_TFv8Tensor(v8::Handle<v8::Float32Array>::Cast(v1));
     TF_Tensor* right = New_TFv8Tensor(v8::Handle<v8::Float32Array>::Cast(v2));
 
     printf("left tensor byte size  : %d\n", TF_TensorByteSize(left));
     printf("right tensor byte size : %d\n", TF_TensorByteSize(left));
+
+    // Use context class.
+    TF_Status* status = TF_NewStatus();
+    TFE_TensorHandle* th = TFE_NewTensorHandle(left, status);
+    printf("status: %d\n", TF_GetCode(status));
 
     //
     // TODO(kreeger): Left off right here.  Need to use TFE to call an op.

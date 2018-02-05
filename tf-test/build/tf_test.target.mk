@@ -39,7 +39,8 @@ INCS_Debug := \
 	-I/usr/local/google/home/kreeger/.node-gyp/8.9.1/src \
 	-I/usr/local/google/home/kreeger/.node-gyp/8.9.1/deps/uv/include \
 	-I/usr/local/google/home/kreeger/.node-gyp/8.9.1/deps/v8/include \
-	-I/usr/local/include
+	-I/usr/local/include \
+	-I$(srcdir)/eager
 
 DEFS_Release := \
 	'-DNODE_GYP_MODULE_NAME=tf_test' \
@@ -75,7 +76,8 @@ INCS_Release := \
 	-I/usr/local/google/home/kreeger/.node-gyp/8.9.1/src \
 	-I/usr/local/google/home/kreeger/.node-gyp/8.9.1/deps/uv/include \
 	-I/usr/local/google/home/kreeger/.node-gyp/8.9.1/deps/v8/include \
-	-I/usr/local/include
+	-I/usr/local/include \
+	-I$(srcdir)/eager
 
 OBJS := \
 	$(obj).target/$(TARGET)/tf_test.o
